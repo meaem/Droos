@@ -4,6 +4,7 @@
     package="com.aabdelaal.droos">
 
     <application
+        android:name=".DroosApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,6 +15,9 @@
         android:theme="@style/Theme.Droos"
         tools:targetApi="31">
         <activity
+            android:name=".ui.subjectsList.SubjectListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.firebaseLogin.FirebaseLoginActivity"
             android:exported="true">
             <intent-filter>
@@ -22,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

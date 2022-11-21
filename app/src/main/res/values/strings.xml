@@ -9,4 +9,14 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="welcome_to_droos_app">Welcome to the Droos app</string>
+
+
+    <string name="login_button">Login</string>
+    <string name="invalid_login_message">Invalid Login please try again</string>
+    <string name="gooogle">Gooogle</string>
+    <string name="email_pass">email/pass</string>
+    <string name="how_you_want_to_log_in">How do you want to log in?</string>
+
 </resources>
