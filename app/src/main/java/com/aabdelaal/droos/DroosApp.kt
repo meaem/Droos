@@ -61,7 +61,7 @@ class DroosApp : Application() {
                 )
             }
             single<LocalDataSource>(named(name = "local")) { DroosLocalDataSource(get()) }
-            single<RemoteDataSource>(named(name = "remote")) { DroosRemoteDataSource() }
+            single<RemoteDataSource>(named(name = "remote")) { DroosRemoteDataSource(get()) }
 
             single { LocalDB.createDroosDao(this@DroosApp) }
         }

@@ -3,21 +3,27 @@ package com.aabdelaal.droos.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-class DroosRemoteDataSource : RemoteDataSource {
+class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : RemoteDataSource {
 
     private companion object {
         const val TAG = "DroosRemoteRepository"
         const val TEACHER_COLLECTION = "teachers"
+        const val USER_TEACHER_COLLECTION = "user_teachers"
     }
 
 //    private val db = Firebase.firestore
 
     private val teachersCollectionRef by lazy {
-        Firebase.firestore.collection(TEACHER_COLLECTION)
+        Log.d(TAG, "current user live data :" + userLD.value.toString())
+        userLD.value?.let {
+            Firebase.firestore.collection(TEACHER_COLLECTION).document(it.uid)
+                .collection(USER_TEACHER_COLLECTION)
+        }!!
     }
 
 

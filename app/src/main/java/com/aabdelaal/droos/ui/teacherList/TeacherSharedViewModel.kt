@@ -1,6 +1,5 @@
 package com.aabdelaal.droos.ui.teacherList
 
-//import com.aabdelaal.droos.data.Result
 import android.app.Application
 import android.util.Log
 import android.view.View
@@ -30,18 +29,13 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         this.showErrorMessage.value =
             exception.message ?: app.getString(R.string.err_request_failed)
-        println(">> $TAG: Exception thrown: $exception.")
+        println(">> $TAG: Exception thrown:")
+        exception.printStackTrace()
         Log.d(TAG, "Exception thrown: $exception.")
     }
 
 
     val manageForMode = SingleLiveEvent<ManageMode?>()
-
-
-//    val name = MutableLiveData<String>()
-//    val phone = MutableLiveData<String>()
-//    val active = MutableLiveData<Boolean>()
-
 
     val title = MutableLiveData("Title")
     val actionButtonText = MutableLiveData(app.getString(R.string.btn_save))
@@ -64,16 +58,20 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
             }
         }
 
+    val deleteAllVisibility = _teacherList.map {
+        when (it.isNotEmpty()) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+
+    }
+
     fun setCurrentTeacher(current: TeacherInfoDataItem) {
         Log.d(TAG, "setCurrentTeacher")
         _currenTeacher.value = current
     }
 
     fun validate(): Result<String> {
-//
-//        if (_currenTeacher.value == null)
-//            return Result.failure(Exception(app.getString(R.string.err_name_is_empty)))
-//        if (name.value.isNullOrEmpty())
         if (_currenTeacher.value?.name.isNullOrBlank())
             return Result.failure(Exception(app.getString(R.string.err_name_is_empty)))
 
@@ -169,10 +167,9 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
         actionButtonText.value = app.getString(R.string.btn_update)
         cancelButtonText.value = app.getString(R.string.btn_cancel)
         actionButtonVisibility.value = View.VISIBLE
-//        currentTeacher.value?.let {
         manageForMode.value = ManageMode.UPDATE
         displayOnly.value = false
-//        }
+
     }
 
     fun navigateToDisplayFragment() {
@@ -181,9 +178,7 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
             app.getString(R.string.manage_teacher_form_title, app.getString(R.string.display))
         cancelButtonText.value = app.getString(R.string.btn_ok)
         actionButtonText.value = app.getString(R.string.btn_delete)
-//        currentTeacher.value?.let {
         manageForMode.value = ManageMode.DISPLAY
-//        }
         displayOnly.value = true
     }
 }
