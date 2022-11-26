@@ -40,17 +40,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnDeleteAll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="128dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/delete_all"
             android:visibility="@{viewModel.deleteAllVisibility}"
+            android:contentDescription="@string/delete_all_teachers_list"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@android:drawable/ic_delete"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
