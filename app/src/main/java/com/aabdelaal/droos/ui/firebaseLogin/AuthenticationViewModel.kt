@@ -16,7 +16,7 @@ class AuthenticationViewModel(
 ) : BaseViewModel(app) {
 
     private var logoutLogic = fun() {
-        Log.d("AuthenticationViewModel", "logoutLogic")
+        Log.d("DroosAuthenticationVM", "logoutLogic")
         AuthUI.getInstance()
             .signOut(getApplication())
             .addOnCompleteListener {

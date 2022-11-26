@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/teacherListFragment">
+
+    <fragment
+        android:id="@+id/subjectListFragment"
+        android:name="com.aabdelaal.droos.ui.subjectsList.SubjectListFragment"
+        android:label="fragment_subject_list"
+        tools:layout="@layout/fragment_subject_list" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.aabdelaal.droos.ui.dachboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_subjectHistoryFragment"
+            app:destination="@id/subjectHistoryFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_addSubjectFragment"
+            app:destination="@id/addSubjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectHistoryFragment"
+        android:name="com.aabdelaal.droos.ui.subjectsList.SubjectHistoryFragment"
+        android:label="fragment_subject_history"
+        tools:layout="@layout/fragment_subject_history" />
+    <fragment
+        android:id="@+id/addSubjectFragment"
+        android:name="com.aabdelaal.droos.ui.subjectsList.AddSubjectFragment"
+        android:label="fragment_add_subject"
+        tools:layout="@layout/fragment_add_subject">
+        <action
+            android:id="@+id/action_addSubjectFragment_to_teacherListFragment"
+            app:destination="@id/teacherListFragment" />
+        <action
+            android:id="@+id/action_addSubjectFragment_to_subjectListFragment"
+            app:destination="@id/subjectListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherListFragment"
+        android:name="com.aabdelaal.droos.ui.teacherList.TeacherListFragment"
+        android:label="fragment_teacher_list"
+        tools:layout="@layout/fragment_teacher_list">
+        <action
+            android:id="@+id/to_ManageTeacherFragment"
+            app:destination="@id/addTeacherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTeacherFragment"
+        android:name="com.aabdelaal.droos.ui.teacherList.AddTeacherFragment"
+        android:label="fragment_add_teacher"
+        tools:layout="@layout/fragment_manage_teacher">
+        <argument
+            android:name="Mode"
+            android:defaultValue="ADD"
+            app:argType="com.aabdelaal.droos.utils.ManageMode" />
+    </fragment>
+</navigation>

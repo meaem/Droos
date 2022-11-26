@@ -16,7 +16,7 @@ class FirebaseLoginActivity : AppCompatActivity() {
     private val viewModel: AuthenticationViewModel by viewModel()
 
     companion object {
-        const val TAG = "AuthenticationActivity"
+        const val TAG = "DroosAuthActivity"
     }
 
     private val signInLauncher = registerForActivityResult(

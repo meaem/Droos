@@ -18,5 +18,32 @@
     <string name="gooogle">Gooogle</string>
     <string name="email_pass">email/pass</string>
     <string name="how_you_want_to_log_in">How do you want to log in?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="err_cant_add_teacher">can not add this teacher</string>
+    <string name="data_is_valid">data is valid</string>
+    <string name="err_phone_is_empty">Phone is empty!!</string>
+    <string name="err_name_is_empty">Name is empty!!</string>
+    <string name="add_new_teacher">Add new Teacher</string>
+    <string name="err_request_failed">Request failed</string>
+    <string name="title_add_teacher">Add Teacher</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_ok">OK</string>
+    <string name="hint_teacher_name">Teacher Name</string>
+    <string name="lbl_name">Name</string>
+    <string name="hint_teacher_phone">Teacher Phone</string>
+    <string name="lbl_phone">Phone</string>
+    <string name="lvl_active">Active</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="list">List of</string>
+    <string name="display">Display</string>
+    <string name="manage_teacher_form_title">%s Teacher</string>
+    <string name="delete_all">delete All</string>
+    <string name="msg_teacher_deleted">Teacher deleted</string>
+    <string name="edit_button">Edit button</string>
 
 </resources>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <variable
-            name="item"
-            type="com.aabdelaal.droos.data.model.Subject" />
+        <!--        <variable-->
+        <!--            name="item"-->
+        <!--            type="com.aabdelaal.droos.data.dto.SubjectDTO" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,9 +15,12 @@
         android:layout_height="match_parent"
         tools:context=".ui.subjectsList.SubjectListActivity">
 
-        <TextView
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{item.name}" />
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
