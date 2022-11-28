@@ -11,6 +11,7 @@ import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
+import com.aabdelaal.droos.data.source.local.mapping.TeacherInfoAndSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 import com.aabdelaal.droos.ui.base.BaseRecyclerViewAdapter
@@ -88,5 +89,13 @@ fun Subject.asEntity(): SubjectEntity {
 
 fun Subject.asRemote(): RemoteSubject {
     return RemoteSubject(this.name, this.isActive, this.remoteID, this.id)
+
+}
+
+fun TeacherInfoAndSubject.asExternalModel(): Subject {
+    return Subject(
+        this.subject.name, this.teacher?.asExternalModel(), this.subject.isActive,
+        this.subject.remoteID, this.subject.id
+    )
 
 }

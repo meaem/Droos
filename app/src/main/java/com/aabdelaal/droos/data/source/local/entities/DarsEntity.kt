@@ -15,6 +15,6 @@ data class DarsEntity(
     val duration: Int,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int? = null
+    val id: Long = 0
 
 )

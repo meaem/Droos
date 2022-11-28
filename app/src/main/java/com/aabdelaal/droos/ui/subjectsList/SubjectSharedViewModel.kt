@@ -50,10 +50,10 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
     private val _teacherList = repository.getSubjects().getOrDefault(MutableLiveData())
 
-    val subjectList: LiveData<List<SubjectDataItem>>
+    val subjectList: LiveData<List<Subject>>
         get() = _teacherList.map {
             it.map {
-                SubjectDataItem(it.name, null, it.isActive, it.remoteID, it.id)
+                Subject(it.name, null, it.isActive, it.remoteID, it.id)
             }
         }
 
@@ -128,7 +128,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun deleteSubject(id: Int) {
+    fun deleteSubject(id: Long) {
         showLoading.value = true
         viewModelScope.launch(exceptionHandler) {
             repository.deleteSubject(id)

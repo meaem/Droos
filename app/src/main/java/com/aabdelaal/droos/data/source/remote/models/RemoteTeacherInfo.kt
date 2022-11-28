@@ -19,5 +19,5 @@ data class RemoteTeacherInfo(
     @DocumentId
     var remoteID: String?,
 
-    val id: Int = 0
+    val id: Long = 0
 )

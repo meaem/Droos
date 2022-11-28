@@ -1,5 +1,7 @@
 package com.aabdelaal.droos.data.model
 
+import java.io.Serializable
+
 data class Subject(
 
     val name: String = "",
@@ -7,6 +9,6 @@ data class Subject(
     @field:JvmField // use this annotation if your Boolean field is prefixed with 'is'
     val isActive: Boolean = true,
     var remoteID: String? = null,
-    val id: Int = 0
+    val id: Long = 0
 
-)
+) : Serializable

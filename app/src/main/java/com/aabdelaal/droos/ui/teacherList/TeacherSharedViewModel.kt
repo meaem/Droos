@@ -134,7 +134,7 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun deleteTeacher(id: Int) {
+    fun deleteTeacher(id: Long) {
         showLoading.value = true
         viewModelScope.launch(exceptionHandler) {
             repository.deleteTeacherInfo(id)

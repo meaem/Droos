@@ -1,5 +1,7 @@
 package com.aabdelaal.droos.data.model
 
+import java.io.Serializable
+
 
 data class TeacherInfo(
     var name: String = "",
@@ -8,5 +10,5 @@ data class TeacherInfo(
     var active: Boolean = true,
     var remoteID: String? = null,
     //local ID
-    var id: Int = 0
-)
+    var id: Long = 0
+) : Serializable

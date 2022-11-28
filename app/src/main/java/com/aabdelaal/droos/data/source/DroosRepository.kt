@@ -8,16 +8,16 @@ interface DroosRepository {
     fun getTeachers(): Result<LiveData<List<TeacherInfo>>>
     fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<TeacherInfo>>>
     suspend fun saveTeacherInfo(teacherInfo: TeacherInfo)
-    suspend fun getTeacherInfoById(id: Int): Result<TeacherInfo>
+    suspend fun getTeacherInfoById(id: Long): Result<TeacherInfo>
     suspend fun deleteAllTeachers()
-    suspend fun deleteTeacherInfo(id: Int)
+    suspend fun deleteTeacherInfo(id: Long)
 
 
     fun getSubjects(): Result<LiveData<List<Subject>>>
     suspend fun saveSubject(subject: Subject)
-    suspend fun getSubjectById(id: Int): Result<Subject>
+    suspend fun getSubjectById(id: Long): Result<Subject>
     suspend fun deleteAllSubjects()
-    suspend fun deleteSubject(id: Int)
+    suspend fun deleteSubject(id: Long)
 
 
 }

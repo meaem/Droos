@@ -12,6 +12,6 @@ data class RemoteDars(
     @DocumentId
     var remoteID: String?,
 
-    val id: Int? = null
+    val id: Long = 0
 
 )

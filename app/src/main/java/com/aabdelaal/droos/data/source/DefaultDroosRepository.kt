@@ -234,7 +234,7 @@ class DefaultDroosRepository(
         }
     }
 
-    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfo> {
+    override suspend fun getTeacherInfoById(id: Long): Result<TeacherInfo> {
         wrapEspressoIdlingResource {
             TODO("Not yet implemented")
         }
@@ -275,7 +275,7 @@ class DefaultDroosRepository(
         }
     }
 
-    override suspend fun deleteTeacherInfo(id: Int) {
+    override suspend fun deleteTeacherInfo(id: Long) {
         wrapEspressoIdlingResource {
             val result = droosLocalDataSource.getTeacherInfoById(id)
             if (result.isSuccess) {
@@ -333,7 +333,7 @@ class DefaultDroosRepository(
         }
     }
 
-    override suspend fun getSubjectById(id: Int): Result<Subject> {
+    override suspend fun getSubjectById(id: Long): Result<Subject> {
         TODO("Not yet implemented")
     }
 
@@ -341,7 +341,7 @@ class DefaultDroosRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteSubject(id: Int) {
+    override suspend fun deleteSubject(id: Long) {
         TODO("Not yet implemented")
     }
 

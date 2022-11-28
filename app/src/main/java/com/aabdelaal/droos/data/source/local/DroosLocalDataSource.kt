@@ -31,16 +31,12 @@ class DroosLocalDataSource(
      */
     override fun getTeachers(): Result<LiveData<List<TeacherInfo>>> {
         val result = droosDao.getTeachers()
-//        if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
-//        else{
+
         return Result.success(result.map {
             it.map {
                 it.asExternalModel()
             }
         })
-//        }
-
-
     }
 
 
@@ -77,7 +73,7 @@ class DroosLocalDataSource(
      * @param id to be used to get the teacherInfo
      * @return Result the holds a Success object with the teacherInfo or an Error object with the error message
      */
-    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfo> =
+    override suspend fun getTeacherInfoById(id: Long): Result<TeacherInfo> =
         withContext(ioDispatcher) {
             wrapEspressoIdlingResource {
                 try {
@@ -107,7 +103,7 @@ class DroosLocalDataSource(
     /**
      * Deletes one the TeacherInfo in the db
      */
-    override suspend fun deleteTeacherInfo(id: Int) {
+    override suspend fun deleteTeacherInfo(id: Long) {
         wrapEspressoIdlingResource {
             withContext(ioDispatcher) {
                 droosDao.deleteTeacherInfo(id)
@@ -116,7 +112,13 @@ class DroosLocalDataSource(
     }
 
     override fun getSubjects(): Result<LiveData<List<Subject>>> {
-        TODO("Not yet implemented")
+        val result = droosDao.getSubjectsWithTeachersInfo()
+
+        return Result.success(result.map {
+            it.map {
+                it.asExternalModel()
+            }
+        })
     }
 
     override suspend fun saveSubject(subject: Subject): Long {
