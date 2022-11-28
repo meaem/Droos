@@ -1,4 +1,4 @@
-package com.aabdelaal.droos.data.dto
+package com.aabdelaal.droos.data.source.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.firebase.firestore.DocumentId
 
 @Entity(tableName = "TeacherInfo")
-data class TeacherInfoDTO(
+data class TeacherInfoEntity(
 
     @ColumnInfo(name = "name")
     val name: String,

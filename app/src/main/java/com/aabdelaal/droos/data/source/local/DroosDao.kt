@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
 
 /**
  * Data Access Object for the droos tables.
@@ -16,13 +16,13 @@ interface DroosDao {
      * @return all teachers.
      */
     @Query("SELECT * FROM TeacherInfo")
-    fun getTeachers(): LiveData<List<TeacherInfoDTO>>
+    fun getTeachers(): LiveData<List<TeacherInfoEntity>>
 
     /**
      * @return all teachers.
      */
     @Query("SELECT * FROM TeacherInfo where isActive=:isActive")
-    fun getTeachersByStatus(isActive: Boolean): LiveData<List<TeacherInfoDTO>>
+    fun getTeachersByStatus(isActive: Boolean): LiveData<List<TeacherInfoEntity>>
 
 
     /**
@@ -30,15 +30,15 @@ interface DroosDao {
      * @return the teacherInfo object with the id
      */
     @Query("SELECT * FROM teacherinfo where id = :teacherId")
-    suspend fun getTecherInfoById(teacherId: Int): TeacherInfoDTO?
+    suspend fun getTecherInfoById(teacherId: Int): TeacherInfoEntity?
 
     /**
      * Insert a teacher info in the database. If the teacher already exists, replace it.
      *
-     * @param teacherInfoDTO the teacherInfo to be inserted.
+     * @param teacherInfoEntity the teacherInfo to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveTeacherInfo(teacherInfo: TeacherInfoDTO): Long
+    suspend fun saveTeacherInfo(teacherInfo: TeacherInfoEntity): Long
 
     /**
      * Delete all teachers.

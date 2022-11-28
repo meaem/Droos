@@ -1,7 +1,12 @@
 package com.aabdelaal.droos.data.source.local
 
 
-import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.aabdelaal.droos.data.model.Subject
+import com.aabdelaal.droos.data.model.TeacherInfo
+import com.aabdelaal.droos.utils.asEntity
+import com.aabdelaal.droos.utils.asExternalModel
 import com.aabdelaal.droos.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -24,22 +29,44 @@ class DroosLocalDataSource(
      * Get the teachers list from the local db
      * @return Result the holds a Success with all the teacherInfo or an Error object with the error message
      */
-    override fun getTeachers() = Result.success(droosDao.getTeachers())
+    override fun getTeachers(): Result<LiveData<List<TeacherInfo>>> {
+        val result = droosDao.getTeachers()
+//        if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
+//        else{
+        return Result.success(result.map {
+            it.map {
+                it.asExternalModel()
+            }
+        })
+//        }
 
 
-    override fun getTeachersByStatus(isActive: Boolean) =
-        Result.success(droosDao.getTeachersByStatus(isActive))
+    }
+
+
+    override fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<TeacherInfo>>> {
+        val result = droosDao.getTeachersByStatus(isActive)
+//        if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
+//        else{
+        return Result.success(result.map {
+            it.map {
+                it.asExternalModel()
+            }
+        })
+//        }
+
+    }
 
 
     /**
      * Insert a teacher Info in the db.
      * @param teacherInfo the teacher Info to be inserted
      */
-    override suspend fun saveTeacherInfo(teacherInfo: TeacherInfoDTO): Long {
+    override suspend fun saveTeacherInfo(teacherInfo: TeacherInfo): Long {
         var id: Long = 0
         wrapEspressoIdlingResource {
             withContext(ioDispatcher) {
-                id = droosDao.saveTeacherInfo(teacherInfo)
+                id = droosDao.saveTeacherInfo(teacherInfo.asEntity())
             }
         }
         return id;
@@ -50,13 +77,13 @@ class DroosLocalDataSource(
      * @param id to be used to get the teacherInfo
      * @return Result the holds a Success object with the teacherInfo or an Error object with the error message
      */
-    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfoDTO> =
+    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfo> =
         withContext(ioDispatcher) {
             wrapEspressoIdlingResource {
                 try {
-                    val teacherInfoDTO = droosDao.getTecherInfoById(id)
-                    if (teacherInfoDTO != null) {
-                        return@withContext Result.success(teacherInfoDTO)
+                    val teacherInfoEntity = droosDao.getTecherInfoById(id)
+                    if (teacherInfoEntity != null) {
+                        return@withContext Result.success(teacherInfoEntity.asExternalModel())
                     } else {
                         return@withContext Result.failure(Exception("Teacher Info not found!"))
                     }
@@ -86,6 +113,14 @@ class DroosLocalDataSource(
                 droosDao.deleteTeacherInfo(id)
             }
         }
+    }
+
+    override fun getSubjects(): Result<LiveData<List<Subject>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveSubject(subject: Subject): Long {
+        TODO("Not yet implemented")
     }
 
 }

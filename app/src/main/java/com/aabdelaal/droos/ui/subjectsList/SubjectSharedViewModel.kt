@@ -1,4 +1,4 @@
-package com.aabdelaal.droos.ui.teacherList
+package com.aabdelaal.droos.ui.subjectsList
 
 import android.app.Application
 import android.util.Log
@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.aabdelaal.droos.R
-import com.aabdelaal.droos.data.model.TeacherInfo
+import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.source.DroosRepository
 import com.aabdelaal.droos.ui.base.BaseViewModel
 import com.aabdelaal.droos.ui.base.NavigationCommand
@@ -20,10 +20,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class TeacherSharedViewModel(val app: Application, val repository: DroosRepository) :
+class SubjectSharedViewModel(val app: Application, val repository: DroosRepository) :
     BaseViewModel(app) {
     companion object {
-        const val TAG = "DroosTeacherVM"
+        const val TAG = "DroosSubjectVM"
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
@@ -43,18 +43,17 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
     val actionButtonVisibility = MutableLiveData(View.VISIBLE)
     val displayOnly = MutableLiveData(false)
 
-    private val _currenTeacher = MutableLiveData(TeacherInfo())
+    private val _currenSubject = MutableLiveData(Subject())
 
-    val currentTeacher: LiveData<TeacherInfo>
-        get() = _currenTeacher
+    val currentSubject: LiveData<Subject>
+        get() = _currenSubject
 
+    private val _teacherList = repository.getSubjects().getOrDefault(MutableLiveData())
 
-    private val _teacherList = repository.getTeachers().getOrDefault(MutableLiveData())
-
-    val teacherList: LiveData<List<TeacherInfo>>
+    val subjectList: LiveData<List<SubjectDataItem>>
         get() = _teacherList.map {
             it.map {
-                TeacherInfo(it.name, it.phone, it.active, it.remoteID, it.id)
+                SubjectDataItem(it.name, null, it.isActive, it.remoteID, it.id)
             }
         }
 
@@ -66,17 +65,17 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun setCurrentTeacher(current: TeacherInfo) {
-        Log.d(TAG, "setCurrentTeacher")
-        _currenTeacher.value = current
+    fun setCurrentSubject(current: Subject) {
+        Log.d(TAG, "setCurrentSubject")
+        _currenSubject.value = current
     }
 
     fun validate(): Result<String> {
-        if (_currenTeacher.value?.name.isNullOrBlank())
+        if (_currenSubject.value?.name.isNullOrBlank())
             return Result.failure(Exception(app.getString(R.string.err_name_is_empty)))
 
-        if (_currenTeacher.value?.phone.isNullOrBlank())
-            return Result.failure(Exception(app.getString(R.string.err_phone_is_empty)))
+        if (_currenSubject.value?.teacher == null)
+            return Result.failure(Exception(app.getString(R.string.err_teacher_is_empty)))
 
         return Result.success(app.getString(R.string.data_is_valid))
 
@@ -85,30 +84,25 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     fun doAction() {
         if (displayOnly.value == true) {
-            currentTeacher.value?.id?.let { deleteTeacher(it) }
+            currentSubject.value?.id?.let { deleteSubject(it) }
         } else {
-            upsertTeacher()
+            upsertSubject()
         }
-
     }
 
-    fun upsertTeacher() {
+    fun upsertSubject() {
         showLoading.value = true
         val result = validate()
-        Log.d(TAG, "test1")
-
         if (result.isSuccess) {
             viewModelScope.launch(exceptionHandler) {
-                Log.d(TAG, "test2e")
-                _currenTeacher.value?.let {
-                    repository.saveTeacherInfo(it)
+                _currenSubject.value.let {
+                    repository.saveSubject(it!!)
 
                     withContext(Dispatchers.Main) {
                         showLoading.value = false
                         navigationCommand.value = NavigationCommand.Back
                     }
                 }
-
             }
 
         } else {
@@ -119,14 +113,14 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
     }
 
     fun cancelAdd() {
-        _currenTeacher.value = TeacherInfo()
+        _currenSubject.value = Subject()
         goBack()
     }
 
     fun deleteAll() {
         showLoading.value = true
         viewModelScope.launch(exceptionHandler) {
-            repository.deleteAllTeachers()
+            repository.deleteAllSubjects()
             withContext(Dispatchers.Main) {
                 showLoading.value = false
             }
@@ -134,10 +128,10 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun deleteTeacher(id: Int) {
+    fun deleteSubject(id: Int) {
         showLoading.value = true
         viewModelScope.launch(exceptionHandler) {
-            repository.deleteTeacherInfo(id)
+            repository.deleteSubject(id)
             withContext(Dispatchers.Main) {
                 showLoading.value = false
                 showToast.value = app.getString(R.string.msg_teacher_deleted)
@@ -149,7 +143,7 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     fun navigateToAddFragment() {
         displayOnly.value = false
-        _currenTeacher.value = TeacherInfo()
+        _currenSubject.value = Subject()
         actionButtonText.value = app.getString(R.string.btn_save)
         actionButtonVisibility.value = View.VISIBLE
         cancelButtonText.value = app.getString(R.string.btn_cancel)

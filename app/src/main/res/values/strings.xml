@@ -23,8 +23,10 @@
     <string name="err_cant_add_teacher">can not add this teacher</string>
     <string name="data_is_valid">data is valid</string>
     <string name="err_phone_is_empty">Phone is empty!!</string>
+    <string name="err_teacher_is_empty">Please Select a teacher!!</string>
     <string name="err_name_is_empty">Name is empty!!</string>
     <string name="add_new_teacher">Add new Teacher</string>
+    <string name="add_new_subject">Add new Subject</string>
     <string name="err_request_failed">Request failed</string>
     <string name="title_add_teacher">Add Teacher</string>
     <string name="btn_cancel">Cancel</string>
@@ -46,5 +48,6 @@
     <string name="msg_teacher_deleted">Teacher deleted</string>
     <string name="edit_button">Edit button</string>
     <string name="delete_all_teachers_list">Delete all Teachers list</string>
+    <string name="delete_all_subjects_list">Delete all Subject list</string>
 
 </resources>

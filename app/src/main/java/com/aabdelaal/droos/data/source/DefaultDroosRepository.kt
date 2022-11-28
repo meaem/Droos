@@ -17,9 +17,11 @@ package com.aabdelaal.droos.data.source
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import com.aabdelaal.droos.data.model.Subject
+import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.data.source.local.LocalDataSource
 import com.aabdelaal.droos.data.source.remote.RemoteDataSource
+import com.aabdelaal.droos.utils.asRemote
 import com.aabdelaal.droos.utils.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -38,13 +40,7 @@ class DefaultDroosRepository(
         const val TAG = "DroosDefDroosRepo"
     }
 
-    override fun getTeachers(): Result<LiveData<List<TeacherInfoDTO>>> {
-        return droosLocalDataSource.getTeachers()
-    }
 
-    override fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<TeacherInfoDTO>>> {
-        return droosLocalDataSource.getTeachersByStatus(isActive)
-    }
 
 
     //    override suspend fun getTasks(forceUpdate: Boolean): Result<List<Task>> {
@@ -206,20 +202,20 @@ class DefaultDroosRepository(
 //    }
 
 
-    override suspend fun saveTeacherInfo(teacherInfo: TeacherInfoDTO) {
+    override suspend fun saveTeacherInfo(teacherInfo: TeacherInfo) {
         wrapEspressoIdlingResource {
             coroutineScope {
 //                try {
-                var remoteId = teacherInfo.remoteID
+                var remoteId: String?
                 withContext(ioDispatcher) {
                     Log.d(TAG, "b4 add remotely")
                     if (teacherInfo.remoteID == null) {
-                        remoteId = droosRemoteDataSource.addTeacherInfo(teacherInfo)
+                        remoteId = droosRemoteDataSource.addTeacherInfo(teacherInfo.asRemote())
                         Log.d(TAG, "after add remotely. remoteId:$remoteId")
                         teacherInfo.remoteID = remoteId
                         println("after add remotely")
                     } else {
-                        droosRemoteDataSource.updateTeacherInfo(teacherInfo)
+                        droosRemoteDataSource.updateTeacherInfo(teacherInfo.asRemote())
                     }
 
                 }
@@ -238,23 +234,115 @@ class DefaultDroosRepository(
         }
     }
 
-    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfoDTO> {
-        TODO("Not yet implemented")
+    override suspend fun getTeacherInfoById(id: Int): Result<TeacherInfo> {
+        wrapEspressoIdlingResource {
+            TODO("Not yet implemented")
+        }
+    }
+
+    override fun getTeachers(): Result<LiveData<List<TeacherInfo>>> {
+        wrapEspressoIdlingResource {
+            return droosLocalDataSource.getTeachers()
+//            if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
+//            else{
+//                return  Result.success(result.getOrNull()!!.map {
+//                    it.map {
+//                        it.asExternalModel()
+//                    }
+//                })
+//            }
+        }
+    }
+
+    override fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<TeacherInfo>>> {
+        wrapEspressoIdlingResource {
+            return droosLocalDataSource.getTeachersByStatus(isActive)
+//            if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
+//            else{
+//                return  Result.success(result.getOrNull()!!.map {
+//                    it.map {
+//                        it.asExternalModel()
+//                    }
+//                })
+//            }
+        }
     }
 
     override suspend fun deleteAllTeachers() {
-        droosRemoteDataSource.deleteAllTeachers()
-        droosLocalDataSource.deleteAllTeachers()
-
+        wrapEspressoIdlingResource {
+            droosRemoteDataSource.deleteAllTeachers()
+            droosLocalDataSource.deleteAllTeachers()
+        }
     }
 
     override suspend fun deleteTeacherInfo(id: Int) {
-        val result = droosLocalDataSource.getTeacherInfoById(id)
-        if (result.isSuccess) {
-            result.getOrNull()?.remoteID?.let { droosRemoteDataSource.deleteTeacherInfo(it) }
-            droosLocalDataSource.deleteTeacherInfo(id)
+        wrapEspressoIdlingResource {
+            val result = droosLocalDataSource.getTeacherInfoById(id)
+            if (result.isSuccess) {
+                result.getOrNull()?.remoteID?.let { droosRemoteDataSource.deleteTeacherInfo(it) }
+                droosLocalDataSource.deleteTeacherInfo(id)
+            }
         }
 
+    }
+
+    override fun getSubjects(): Result<LiveData<List<Subject>>> {
+        wrapEspressoIdlingResource {
+
+            return droosLocalDataSource.getSubjects()
+//            if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
+//            else{
+//                return  Result.success(result.getOrNull()!!.map {
+//                    it.map {
+//                        it.asExternalModel()
+//                    }
+//                })
+//            }
+
+        }
+    }
+
+    override suspend fun saveSubject(subject: Subject) {
+        wrapEspressoIdlingResource {
+            coroutineScope {
+//                try {
+                var remoteId: String?
+                withContext(ioDispatcher) {
+                    Log.d(TAG, "b4 add remotely")
+                    if (subject.remoteID == null) {
+                        remoteId = droosRemoteDataSource.addSubject(subject.asRemote())
+                        Log.d(TAG, "after add remotely. remoteId:$remoteId")
+                        subject.remoteID = remoteId
+                        println("after add remotely")
+                    } else {
+                        droosRemoteDataSource.updateSubject(subject.asRemote())
+                    }
+                }
+
+                withContext(ioDispatcher) {
+                    Log.d(TAG, "b4 add locally")
+                    droosLocalDataSource.saveSubject(subject)
+                    Log.d(TAG, "after add locally")
+                }
+
+//                    launch { }
+//                } catch (ex: Exception) {
+//                    println( ex.message.toString())
+//                }
+            }
+        }
+    }
+
+    override suspend fun getSubjectById(id: Int): Result<Subject> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllSubjects() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteSubject(id: Int) {
+        TODO("Not yet implemented")
     }
 
 

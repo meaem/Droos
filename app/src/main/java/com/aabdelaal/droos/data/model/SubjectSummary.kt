@@ -1,9 +1,9 @@
 package com.aabdelaal.droos.data.model
 
-import com.aabdelaal.droos.data.dto.SubjectDTO
+import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 
 data class SubjectSummary(
-    val subject: SubjectDTO,
+    val subject: SubjectEntity,
     val pendingCount: Int = 0,
     val paidCount: Int = 0
 ) {

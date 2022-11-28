@@ -2,7 +2,8 @@ package com.aabdelaal.droos.data.source.remote
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
+import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -56,7 +57,7 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
 //    }
 
 
-    override suspend fun addTeacherInfo(teacherInfo: TeacherInfoDTO): String {
+    override suspend fun addTeacherInfo(teacherInfo: RemoteTeacherInfo): String {
         println("before remote add to  db.collection(\"teachers\")")
         Log.d(TAG, "before remote add to  db.collection(\"teachers\")")
         val x = teachersCollectionRef
@@ -68,7 +69,7 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
 
     }
 
-    override suspend fun updateTeacherInfo(teacherInfo: TeacherInfoDTO) {
+    override suspend fun updateTeacherInfo(teacherInfo: RemoteTeacherInfo) {
         println("before remote update to  db.collection(\"teachers\\${teacherInfo.remoteID}\")")
         Log.d(TAG, "before remote update to  db.collection(\"teachers\\${teacherInfo.remoteID}\")")
 
@@ -79,7 +80,7 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
         println("after remote update to  db.collection(\"teachers\\${teacherInfo.remoteID}\")")
     }
 
-    override suspend fun getTeacherInfoById(id: String): Result<TeacherInfoDTO> {
+    override suspend fun getTeacherInfoById(id: String): Result<RemoteTeacherInfo> {
         TODO("Not yet implemented")
     }
 
@@ -104,11 +105,25 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
             .await()
     }
 
-    override fun getTeachers(): Result<LiveData<List<TeacherInfoDTO>>> {
+
+    override fun getTeachers(): Result<LiveData<List<RemoteTeacherInfo>>> {
         TODO("Not yet implemented")
     }
 
-    override fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<TeacherInfoDTO>>> {
+    override fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<RemoteTeacherInfo>>> {
         TODO("Not yet implemented")
     }
+
+    override fun getSubjects(): Result<LiveData<List<RemoteSubject>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addSubject(subject: RemoteSubject): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateSubject(subject: RemoteSubject) {
+        TODO("Not yet implemented")
+    }
+
 }

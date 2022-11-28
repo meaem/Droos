@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.aabdelaal.droos.ui.teacherList.TeacherInfoDataItem" />
+            type="com.aabdelaal.droos.data.model.TeacherInfo" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.aabdelaal.droos.data.dto.TeacherInfoDTO
+import com.aabdelaal.droos.data.model.Subject
+import com.aabdelaal.droos.data.model.TeacherInfo
+import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
+import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
+import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
+import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 import com.aabdelaal.droos.ui.base.BaseRecyclerViewAdapter
-import com.aabdelaal.droos.ui.teacherList.TeacherInfoDataItem
 
 
 /**
@@ -59,10 +63,30 @@ fun View.fadeOut() {
     })
 }
 
-fun TeacherInfoDataItem?.toDTO(): TeacherInfoDTO? {
-    this?.let {
-        return TeacherInfoDTO(this.name, this.phone, this.isActive, this.remoteId, this.id)
+fun TeacherInfo.asEntity(): TeacherInfoEntity {
+    this.let {
+        return TeacherInfoEntity(this.name, this.phone, this.active, this.remoteID, this.id)
     }
+}
 
-    return null
+fun TeacherInfo.asRemote(): RemoteTeacherInfo {
+    this.let {
+        return RemoteTeacherInfo(this.name, this.phone, this.active, this.remoteID, this.id)
+    }
+}
+
+fun TeacherInfoEntity.asExternalModel(): TeacherInfo {
+    this.let {
+        return TeacherInfo(this.name, this.phone, this.isActive, this.remoteID, this.id)
+    }
+}
+
+fun Subject.asEntity(): SubjectEntity {
+    return SubjectEntity(this.name, this.isActive, this.remoteID, this.id)
+
+}
+
+fun Subject.asRemote(): RemoteSubject {
+    return RemoteSubject(this.name, this.isActive, this.remoteID, this.id)
+
 }

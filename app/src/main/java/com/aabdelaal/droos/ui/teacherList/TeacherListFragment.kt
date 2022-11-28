@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.databinding.FragmentTeacherListBinding
 import com.aabdelaal.droos.ui.base.BaseFragment
 import com.aabdelaal.droos.ui.base.NavigationCommand
@@ -75,12 +76,12 @@ class TeacherListFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        val onTeacherItemClick = fun(t: TeacherInfoDataItem) {
+        val onTeacherItemClick = fun(t: TeacherInfo) {
             _viewModel.setCurrentTeacher(t)
             _viewModel.navigateToDisplayFragment()
             Log.d(TAG, "onTeacherClick callback")
         }
-        val onEditTeacherItemClick = fun(t: TeacherInfoDataItem) {
+        val onEditTeacherItemClick = fun(t: TeacherInfo) {
             _viewModel.setCurrentTeacher(t)
             _viewModel.navigateToEditFragment()
             Log.d(TAG, "onEditTeacherItemClick callback")
