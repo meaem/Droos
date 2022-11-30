@@ -120,6 +120,7 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
     }
 
     fun cancelAdd() {
+        showLoading.value = false
         _currenTeacher.value = TeacherInfo()
         goBack()
     }

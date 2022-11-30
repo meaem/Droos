@@ -114,6 +114,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
     }
 
     fun cancelAdd() {
+        showLoading.value = false
         _currenSubject.value = Subject()
         goBack()
     }

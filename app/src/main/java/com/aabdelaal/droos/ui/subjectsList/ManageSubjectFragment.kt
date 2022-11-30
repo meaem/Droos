@@ -43,11 +43,9 @@ class ManageSubjectFragment : BaseFragment() {
         _viewModel.displayOnly.observe(viewLifecycleOwner) {
             binding.etName.isEnabled = !it
             binding.techerNameTV.isEnabled = !it
-//            binding.isActive.isEnabled = !it
 
         }
 
-//        _viewModel.showLoading.observe()
 
     }
 
