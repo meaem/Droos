@@ -52,11 +52,12 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
     private val _teacherList = repository.getTeachers().getOrDefault(MutableLiveData())
 
     val teacherList: LiveData<List<TeacherInfo>>
-        get() = _teacherList.map {
-            it.map {
-                TeacherInfo(it.name, it.phone, it.active, it.remoteID, it.id)
-            }
-        }
+        get() = _teacherList
+//            _teacherList.map {
+//            it.map {
+//                TeacherInfo(it.name, it.phone, it.active, it.remoteID, it.id)
+//            }
+//        }
 
     val deleteAllVisibility = _teacherList.map {
         when (it.isNotEmpty()) {

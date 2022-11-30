@@ -9,7 +9,7 @@ import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
  * Main entry point for accessing droos data.
  */
 interface RemoteDataSource {
-    fun getTeachers(): Result<LiveData<List<RemoteTeacherInfo>>>
+    suspend fun getTeachers(): Result<LiveData<List<RemoteTeacherInfo>>>
     fun getTeachersByStatus(isActive: Boolean): Result<LiveData<List<RemoteTeacherInfo>>>
     suspend fun addTeacherInfo(teacherInfo: RemoteTeacherInfo): String
     suspend fun updateTeacherInfo(teacherInfo: RemoteTeacherInfo)
@@ -18,7 +18,11 @@ interface RemoteDataSource {
     suspend fun deleteTeacherInfo(id: String)
 
 
-    fun getSubjects(): Result<LiveData<List<RemoteSubject>>>
+    suspend fun getSubjects(): Result<LiveData<List<RemoteSubject>>>
     suspend fun addSubject(subject: RemoteSubject): String
     suspend fun updateSubject(subject: RemoteSubject)
+
+    suspend fun deleteAllSubjects()
+    suspend fun deleteSubject(id: String)
+
 }

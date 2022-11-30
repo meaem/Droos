@@ -65,7 +65,7 @@ class DroosLocalDataSource(
                 id = droosDao.saveTeacherInfo(teacherInfo.asEntity())
             }
         }
-        return id;
+        return id
     }
 //
     /**
@@ -121,8 +121,54 @@ class DroosLocalDataSource(
         })
     }
 
+    override suspend fun getSubjectById(id: Long): Result<Subject> =
+        withContext(ioDispatcher) {
+            wrapEspressoIdlingResource {
+                try {
+                    val subjectEntity = droosDao.getSubjectById(id)
+                    if (subjectEntity != null) {
+                        return@withContext Result.success(subjectEntity.asExternalModel())
+                    } else {
+                        return@withContext Result.failure(Exception("Subject Info not found!"))
+                    }
+                } catch (e: Exception) {
+                    return@withContext Result.failure(e)
+                }
+            }
+        }
+
+
     override suspend fun saveSubject(subject: Subject): Long {
-        TODO("Not yet implemented")
+        var id: Long = 0
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                id = droosDao.saveSubject(subject.asEntity())
+            }
+        }
+        return id
+    }
+
+
+    /**
+     * Deletes one the Subject from the db
+     */
+    override suspend fun deleteSubject(id: Long) {
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                droosDao.deleteSubject(id)
+            }
+        }
+    }
+
+    /**
+     * Deletes one the Subject from the db
+     */
+    override suspend fun deleteAllSubjects() {
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                droosDao.deleteAllSubjects()
+            }
+        }
     }
 
 }

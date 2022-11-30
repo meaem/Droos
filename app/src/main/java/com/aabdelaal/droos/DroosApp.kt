@@ -11,6 +11,7 @@ import com.aabdelaal.droos.data.source.remote.DroosRemoteDataSource
 import com.aabdelaal.droos.data.source.remote.RemoteDataSource
 import com.aabdelaal.droos.ui.firebaseLogin.AuthenticationViewModel
 import com.aabdelaal.droos.ui.firebaseLogin.FirebaseUserLiveData
+import com.aabdelaal.droos.ui.subjectsList.SubjectSharedViewModel
 //import com.aabdelaal.droos.ui.teacherList.TeacherListViewModel
 import com.aabdelaal.droos.ui.teacherList.TeacherSharedViewModel
 import com.google.firebase.auth.FirebaseUser
@@ -32,6 +33,10 @@ class DroosApp : Application() {
 //            Declare a ViewModel - be later inject into Fragment with dedicated injector using by viewModel()
             viewModel {
                 TeacherSharedViewModel(get(), get())
+            }
+
+            viewModel {
+                SubjectSharedViewModel(get(), get())
             }
 
 //            viewModel {

@@ -48,21 +48,22 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
     val currentSubject: LiveData<Subject>
         get() = _currenSubject
 
-    private val _teacherList = repository.getSubjects().getOrDefault(MutableLiveData())
+    private val _subjectList = repository.getSubjects().getOrDefault(MutableLiveData())
 
     val subjectList: LiveData<List<Subject>>
-        get() = _teacherList.map {
-            it.map {
-                Subject(it.name, null, it.isActive, it.remoteID, it.id)
-            }
-        }
+        get() = _subjectList
 
-    val deleteAllVisibility = _teacherList.map {
+//            _subjectList.map {
+//            it.map {
+//                Subject(it.name, null, it.isActive, it.remoteID, it.id)
+//            }
+//        }
+
+    val deleteAllVisibility = _subjectList.map {
         when (it.isNotEmpty()) {
             true -> View.VISIBLE
             false -> View.GONE
         }
-
     }
 
     fun setCurrentSubject(current: Subject) {
@@ -74,8 +75,8 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
         if (_currenSubject.value?.name.isNullOrBlank())
             return Result.failure(Exception(app.getString(R.string.err_name_is_empty)))
 
-        if (_currenSubject.value?.teacher == null)
-            return Result.failure(Exception(app.getString(R.string.err_teacher_is_empty)))
+//        if (_currenSubject.value?.teacher == null)
+//            return Result.failure(Exception(app.getString(R.string.err_teacher_is_empty)))
 
         return Result.success(app.getString(R.string.data_is_valid))
 
@@ -108,7 +109,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
         } else {
             Log.e(TAG, result.toString())
             println(result.toString())
-            showToast.value = app.getString(R.string.err_cant_add_teacher)
+            showToast.value = app.getString(R.string.err_cant_add_subject)
         }
     }
 
@@ -134,7 +135,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
             repository.deleteSubject(id)
             withContext(Dispatchers.Main) {
                 showLoading.value = false
-                showToast.value = app.getString(R.string.msg_teacher_deleted)
+                showToast.value = app.getString(R.string.msg_subject_deleted)
                 goBack()
             }
         }
@@ -148,7 +149,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
         actionButtonVisibility.value = View.VISIBLE
         cancelButtonText.value = app.getString(R.string.btn_cancel)
 
-        title.value = app.getString(R.string.manage_teacher_form_title, app.getString(R.string.add))
+        title.value = app.getString(R.string.manage_subject_form_title, app.getString(R.string.add))
         manageForMode.value = ManageMode.ADD
         displayOnly.value = false
     }
@@ -158,7 +159,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
         displayOnly.value = false
         title.value =
             app.getString(
-                R.string.manage_teacher_form_title,
+                R.string.manage_subject_form_title,
                 app.getString(R.string.update)
             )
         actionButtonText.value = app.getString(R.string.btn_update)
@@ -172,7 +173,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
     fun navigateToDisplayFragment() {
 
         title.value =
-            app.getString(R.string.manage_teacher_form_title, app.getString(R.string.display))
+            app.getString(R.string.manage_subject_form_title, app.getString(R.string.display))
         cancelButtonText.value = app.getString(R.string.btn_ok)
         actionButtonText.value = app.getString(R.string.btn_delete)
         manageForMode.value = ManageMode.DISPLAY

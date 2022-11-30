@@ -338,11 +338,20 @@ class DefaultDroosRepository(
     }
 
     override suspend fun deleteAllSubjects() {
-        TODO("Not yet implemented")
+        wrapEspressoIdlingResource {
+            droosRemoteDataSource.deleteAllSubjects()
+            droosLocalDataSource.deleteAllSubjects()
+        }
     }
 
     override suspend fun deleteSubject(id: Long) {
-        TODO("Not yet implemented")
+        wrapEspressoIdlingResource {
+            val result = droosLocalDataSource.getSubjectById(id)
+            if (result.isSuccess) {
+                result.getOrNull()?.remoteID?.let { droosRemoteDataSource.deleteSubject(it) }
+                droosLocalDataSource.deleteSubject(id)
+            }
+        }
     }
 
 

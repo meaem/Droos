@@ -17,7 +17,9 @@ interface LocalDataSource {
     suspend fun deleteTeacherInfo(id: Long)
 
     fun getSubjects(): Result<LiveData<List<Subject>>>
+    suspend fun getSubjectById(id: Long): Result<Subject>
     suspend fun saveSubject(subject: Subject): Long
-
+    suspend fun deleteAllSubjects()
+    suspend fun deleteSubject(id: Long)
 
 }

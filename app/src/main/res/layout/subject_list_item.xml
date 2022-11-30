@@ -41,10 +41,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Mr. Ahmed" />
+                tools:text="Arabic" />
 
             <TextView
-                android:id="@+id/phoneTv"
+                android:id="@+id/currentTeacherTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -55,7 +55,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/nameTv"
                 app:layout_constraintTop_toBottomOf="@+id/nameTv"
-                tools:text="01012345678" />
+                tools:text="Mr. Ahmed" />
 
             <ImageView
                 android:id="@+id/editIV"

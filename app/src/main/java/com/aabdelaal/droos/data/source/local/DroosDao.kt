@@ -1,10 +1,7 @@
 package com.aabdelaal.droos.data.source.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
 import com.aabdelaal.droos.data.source.local.mapping.TeacherInfoAndSubject
@@ -37,7 +34,7 @@ interface DroosDao {
     /**
      * Insert a teacher info in the database. If the teacher already exists, replace it.
      *
-     * @param teacherInfoEntity the teacherInfo to be inserted.
+     * @param teacherInfo the teacherInfo to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveTeacherInfo(teacherInfo: TeacherInfoEntity): Long
@@ -62,10 +59,38 @@ interface DroosDao {
     fun getSubjects(): LiveData<List<SubjectEntity>>
 
     /**
-     * @return all subjects with their current teachers.
+     * @return all subjects with their current teachers(if any).
      */
+    @Transaction
     @Query("SELECT * FROM Subject")
     fun getSubjectsWithTeachersInfo(): LiveData<List<TeacherInfoAndSubject>>
 
+    /**
+     * Insert a subject in the database. If the subject already exists, replace it.
+     *
+     * @param subject the subject to be inserted.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveSubject(subject: SubjectEntity): Long
+
+
+    /**
+     * Delete all teachers.
+     */
+    @Query("DELETE FROM Subject")
+    suspend fun deleteAllSubjects()
+
+    /**
+     * Delete teacher by ID.
+     */
+    @Query("DELETE FROM Subject where id=:subjectId")
+    suspend fun deleteSubject(subjectId: Long)
+
+    /**
+     * @param id the id of the Teacher Info
+     * @return the teacherInfo object with the id
+     */
+    @Query("SELECT * FROM subject where id = :id")
+    suspend fun getSubjectById(id: Long): TeacherInfoAndSubject?
 
 }

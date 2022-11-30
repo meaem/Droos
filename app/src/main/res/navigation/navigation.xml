@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/teacherListFragment">
+    app:startDestination="@id/subjectListFragment">
 
     <fragment
         android:id="@+id/subjectListFragment"
         android:name="com.aabdelaal.droos.ui.subjectsList.SubjectListFragment"
         android:label="fragment_subject_list"
-        tools:layout="@layout/fragment_subject_list" />
+        tools:layout="@layout/fragment_subject_list">
+        <action
+            android:id="@+id/to_ManageSubjectFragment"
+            app:destination="@id/addSubjectFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.aabdelaal.droos.ui.dachboard.DashboardFragment"
@@ -29,16 +33,15 @@
         tools:layout="@layout/fragment_subject_history" />
     <fragment
         android:id="@+id/addSubjectFragment"
-        android:name="com.aabdelaal.droos.ui.subjectsList.AddSubjectFragment"
+        android:name="com.aabdelaal.droos.ui.subjectsList.ManageSubjectFragment"
         android:label="fragment_add_subject"
-        tools:layout="@layout/fragment_add_subject">
-        <action
-            android:id="@+id/action_addSubjectFragment_to_teacherListFragment"
-            app:destination="@id/teacherListFragment" />
-        <action
-            android:id="@+id/action_addSubjectFragment_to_subjectListFragment"
-            app:destination="@id/subjectListFragment" />
+        tools:layout="@layout/fragment_manage_subject">
+        <argument
+            android:name="Mode"
+            android:defaultValue="ADD"
+            app:argType="com.aabdelaal.droos.utils.ManageMode" />
     </fragment>
+
     <fragment
         android:id="@+id/teacherListFragment"
         android:name="com.aabdelaal.droos.ui.teacherList.TeacherListFragment"
@@ -50,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/addTeacherFragment"
-        android:name="com.aabdelaal.droos.ui.teacherList.AddTeacherFragment"
+        android:name="com.aabdelaal.droos.ui.teacherList.ManageTeacherFragment"
         android:label="fragment_add_teacher"
         tools:layout="@layout/fragment_manage_teacher">
         <argument

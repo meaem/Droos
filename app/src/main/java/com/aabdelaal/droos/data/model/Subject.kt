@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class Subject(
 
-    val name: String = "",
+    var name: String = "",
     var teacher: TeacherInfo? = null,
     @field:JvmField // use this annotation if your Boolean field is prefixed with 'is'
     val isActive: Boolean = true,

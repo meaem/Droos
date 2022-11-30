@@ -7,25 +7,15 @@
 
         <variable
             name="viewModel"
-            type="com.aabdelaal.droos.ui.teacherList.TeacherSharedViewModel" />
+            type="com.aabdelaal.droos.ui.subjectsList.SubjectSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/teacher_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.teacherList.ManageTeacherFragment">
+        tools:context=".ui.subjectsList.ManageSubjectFragment">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/isActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:checked="@={viewModel.currentTeacher.active}"
-            android:text="@string/lvl_active"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -44,13 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/lbl_phone"
+            android:text="@string/lbl_teacher"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/etPhone"
-            app:layout_constraintStart_toStartOf="@id/etPhone" />
+            app:layout_constraintBottom_toTopOf="@+id/techerNameTV"
+            app:layout_constraintStart_toStartOf="@id/techerNameTV" />
 
-        <EditText
-            android:id="@+id/etPhone"
+        <TextView
+            android:id="@+id/techerNameTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -59,9 +49,8 @@
             android:layout_marginBottom="24dp"
             android:autofillHints="phone"
             android:ems="10"
-            android:hint="@string/hint_teacher_phone"
-            android:inputType="phone"
-            android:text="@={viewModel.currentTeacher.phone}"
+            android:hint="@string/hint_choose_teacher"
+            android:text="@={viewModel.currentSubject.teacher.name}"
             app:layout_constraintBottom_toTopOf="@+id/btnSave"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -87,10 +76,10 @@
             android:layout_marginBottom="24dp"
             android:autofillHints="name"
             android:ems="10"
-            android:hint="@string/hint_teacher_name"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.currentTeacher.name}"
-            app:layout_constraintBottom_toTopOf="@+id/etPhone"
+            android:hint="@string/hint_subject_name"
+            android:inputType="text"
+            android:text="@={viewModel.currentSubject.name}"
+            app:layout_constraintBottom_toTopOf="@+id/techerNameTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +99,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPhone" />
+            app:layout_constraintTop_toBottomOf="@+id/techerNameTV" />
 
         <Button
             android:id="@+id/btnCancel"

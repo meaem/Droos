@@ -83,7 +83,7 @@ fun TeacherInfoEntity.asExternalModel(): TeacherInfo {
 }
 
 fun Subject.asEntity(): SubjectEntity {
-    return SubjectEntity(this.name, this.isActive, this.remoteID, this.id)
+    return SubjectEntity(this.name, this.isActive, this.remoteID, this.id, this.teacher?.id)
 
 }
 
