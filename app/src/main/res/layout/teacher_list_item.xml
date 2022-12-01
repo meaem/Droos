@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.aabdelaal.droos.data.model.Subject" />
+            type="com.aabdelaal.droos.data.model.TeacherInfo" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
 
-                android:text="@{item.teacher.name}"
+                android:text="@{item.phone}"
                 android:textAlignment="viewStart"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

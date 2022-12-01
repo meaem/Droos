@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aabdelaal.droos.databinding.FragmentManageTeacherBinding
 import com.aabdelaal.droos.ui.base.BaseFragment
+import com.aabdelaal.droos.ui.dialogs.DeleteConfirmationDialog
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
@@ -44,6 +45,12 @@ class ManageTeacherFragment : BaseFragment() {
             binding.etName.isEnabled = !it
             binding.etPhone.isEnabled = !it
             binding.isActive.isEnabled = !it
+
+        }
+        _viewModel.deleteTeacherEvent.observe(viewLifecycleOwner) {
+            val ok_action = { _viewModel.deleteTeacher() }
+            DeleteConfirmationDialog(ok_action)
+                .show(childFragmentManager, DeleteConfirmationDialog.TAG)
 
         }
 

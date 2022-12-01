@@ -40,6 +40,9 @@
             android:name="Mode"
             android:defaultValue="ADD"
             app:argType="com.aabdelaal.droos.utils.ManageMode" />
+        <action
+            android:id="@+id/to_teacherListFragment"
+            app:destination="@id/teacherListFragment" />
     </fragment>
 
     <fragment
@@ -47,6 +50,10 @@
         android:name="com.aabdelaal.droos.ui.teacherList.TeacherListFragment"
         android:label="fragment_teacher_list"
         tools:layout="@layout/fragment_teacher_list">
+        <argument
+            android:name="Mode"
+            android:defaultValue="LIST"
+            app:argType="com.aabdelaal.droos.utils.ManageMode" />
         <action
             android:id="@+id/to_ManageTeacherFragment"
             app:destination="@id/addTeacherFragment" />

@@ -9,6 +9,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.aabdelaal.droos.R
 import com.aabdelaal.droos.data.model.Subject
+import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.data.source.DroosRepository
 import com.aabdelaal.droos.ui.base.BaseViewModel
 import com.aabdelaal.droos.ui.base.NavigationCommand
@@ -36,12 +37,16 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
 
     val manageForMode = SingleLiveEvent<ManageMode?>()
+    val selectTeacherEvent = SingleLiveEvent<Boolean>()
+    val deleteSubjectEvent = SingleLiveEvent<Boolean>()
 
     val title = MutableLiveData("Title")
     val actionButtonText = MutableLiveData(app.getString(R.string.btn_save))
     val cancelButtonText = MutableLiveData(app.getString(R.string.btn_cancel))
     val actionButtonVisibility = MutableLiveData(View.VISIBLE)
     val displayOnly = MutableLiveData(false)
+
+    var dialogIsReady = false
 
     private val _currenSubject = MutableLiveData(Subject())
 
@@ -52,6 +57,13 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
     val subjectList: LiveData<List<Subject>>
         get() = _subjectList
+
+
+    private val _teacherList = repository.getTeachers().getOrDefault(MutableLiveData())
+
+    val teacherList: LiveData<List<TeacherInfo>>
+        get() = _teacherList
+
 
 //            _subjectList.map {
 //            it.map {
@@ -85,7 +97,8 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
     fun doAction() {
         if (displayOnly.value == true) {
-            currentSubject.value?.id?.let { deleteSubject(it) }
+            deleteSubjectEvent.value = true
+
         } else {
             upsertSubject()
         }
@@ -120,6 +133,7 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
     }
 
     fun deleteAll() {
+
         showLoading.value = true
         viewModelScope.launch(exceptionHandler) {
             repository.deleteAllSubjects()
@@ -130,17 +144,18 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun deleteSubject(id: Long) {
-        showLoading.value = true
-        viewModelScope.launch(exceptionHandler) {
-            repository.deleteSubject(id)
-            withContext(Dispatchers.Main) {
-                showLoading.value = false
-                showToast.value = app.getString(R.string.msg_subject_deleted)
-                goBack()
+    fun deleteSubject() {
+        currentSubject.value?.id?.let {
+            showLoading.value = true
+            viewModelScope.launch(exceptionHandler) {
+                repository.deleteSubject(it)
+                withContext(Dispatchers.Main) {
+                    showLoading.value = false
+                    showToast.value = app.getString(R.string.msg_subject_deleted)
+                    goBack()
+                }
             }
         }
-
     }
 
     fun navigateToAddFragment() {
@@ -180,4 +195,16 @@ class SubjectSharedViewModel(val app: Application, val repository: DroosReposito
         manageForMode.value = ManageMode.DISPLAY
         displayOnly.value = true
     }
+
+    fun navigateToSelectFragment() {
+
+//        title.value =
+//            app.getString(R.string.manage_subject_form_title, app.getString(R.string.select))
+//        cancelButtonText.value = app.getString(R.string.btn_ok)
+//        actionButtonText.value = app.getString(R.string.btn_delete)
+        selectTeacherEvent.value = true
+
+    }
+
+
 }

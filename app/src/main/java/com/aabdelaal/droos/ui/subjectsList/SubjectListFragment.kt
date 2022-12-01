@@ -9,6 +9,7 @@ import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.databinding.FragmentSubjectListBinding
 import com.aabdelaal.droos.ui.base.BaseFragment
 import com.aabdelaal.droos.ui.base.NavigationCommand
+import com.aabdelaal.droos.ui.dialogs.DeleteConfirmationDialog
 import com.aabdelaal.droos.utils.ManageMode
 import com.aabdelaal.droos.utils.setup
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -59,6 +60,7 @@ class SubjectListFragment() : BaseFragment() {
                             )
                         )
                     ManageMode.LIST -> {}
+                    ManageMode.SELECT -> {}
 //                    else -> Log.e(TAG, "invalid mode")
                 }
             }
@@ -71,7 +73,14 @@ class SubjectListFragment() : BaseFragment() {
         }
 
         databinding.btnDeleteAll.setOnClickListener {
-            _viewModel.deleteAll()
+            val ok_Action = { _viewModel.deleteAll() }
+
+            DeleteConfirmationDialog(ok_Action).show(
+                childFragmentManager,
+                DeleteConfirmationDialog.TAG
+            )
+
+
         }
     }
 

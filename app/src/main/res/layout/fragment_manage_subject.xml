@@ -51,6 +51,7 @@
             android:ems="10"
             android:hint="@string/hint_choose_teacher"
             android:text="@={viewModel.currentSubject.teacher.name}"
+            app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_24"
             app:layout_constraintBottom_toTopOf="@+id/btnSave"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

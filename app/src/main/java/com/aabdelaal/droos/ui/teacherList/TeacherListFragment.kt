@@ -9,6 +9,7 @@ import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.databinding.FragmentTeacherListBinding
 import com.aabdelaal.droos.ui.base.BaseFragment
 import com.aabdelaal.droos.ui.base.NavigationCommand
+import com.aabdelaal.droos.ui.dialogs.DeleteConfirmationDialog
 import com.aabdelaal.droos.utils.ManageMode
 import com.aabdelaal.droos.utils.setup
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -37,6 +38,10 @@ class TeacherListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val args = arguments
+
+        args?.get("Mode")
+
         databinding.lifecycleOwner = this
         databinding.viewModel = _viewModel
 
@@ -59,6 +64,9 @@ class TeacherListFragment : BaseFragment() {
                             )
                         )
                     ManageMode.LIST -> {}
+                    ManageMode.SELECT -> {
+                        //_vi
+                    }
 //                    else -> Log.e(TAG, "invalid mode")
                 }
             }
@@ -71,7 +79,14 @@ class TeacherListFragment : BaseFragment() {
         }
 
         databinding.btnDeleteAll.setOnClickListener {
-            _viewModel.deleteAll()
+            val ok_Action = { _viewModel.deleteAll() }
+
+            DeleteConfirmationDialog(ok_Action).show(
+                childFragmentManager,
+                DeleteConfirmationDialog.TAG
+            )
+
+//            _viewModel.deleteAll()
         }
     }
 

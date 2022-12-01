@@ -90,6 +90,7 @@ interface DroosDao {
      * @param id the id of the Teacher Info
      * @return the teacherInfo object with the id
      */
+    @Transaction
     @Query("SELECT * FROM subject where id = :id")
     suspend fun getSubjectById(id: Long): TeacherInfoAndSubject?
 

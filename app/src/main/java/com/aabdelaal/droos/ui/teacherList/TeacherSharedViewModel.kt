@@ -36,13 +36,14 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
 
     val manageForMode = SingleLiveEvent<ManageMode?>()
+    val deleteTeacherEvent = SingleLiveEvent<Boolean>()
 
     val title = MutableLiveData("Title")
     val actionButtonText = MutableLiveData(app.getString(R.string.btn_save))
     val cancelButtonText = MutableLiveData(app.getString(R.string.btn_cancel))
     val actionButtonVisibility = MutableLiveData(View.VISIBLE)
     val displayOnly = MutableLiveData(false)
-
+    var dialogMode = false;
     private val _currenTeacher = MutableLiveData(TeacherInfo())
 
     val currentTeacher: LiveData<TeacherInfo>
@@ -60,11 +61,13 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 //        }
 
     val deleteAllVisibility = _teacherList.map {
-        when (it.isNotEmpty()) {
-            true -> View.VISIBLE
-            false -> View.GONE
+        when {
+            dialogMode -> View.GONE
+//            else -> {
+            it.isNotEmpty() -> View.VISIBLE
+            else -> View.GONE
+//            }
         }
-
     }
 
     fun setCurrentTeacher(current: TeacherInfo) {
@@ -86,7 +89,7 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     fun doAction() {
         if (displayOnly.value == true) {
-            currentTeacher.value?.id?.let { deleteTeacher(it) }
+            deleteTeacherEvent.value = true
         } else {
             upsertTeacher()
         }
@@ -136,17 +139,18 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
 
     }
 
-    fun deleteTeacher(id: Long) {
-        showLoading.value = true
-        viewModelScope.launch(exceptionHandler) {
-            repository.deleteTeacherInfo(id)
-            withContext(Dispatchers.Main) {
-                showLoading.value = false
-                showToast.value = app.getString(R.string.msg_teacher_deleted)
-                goBack()
+    fun deleteTeacher() {
+        currentTeacher.value?.id?.let {
+            showLoading.value = true
+            viewModelScope.launch(exceptionHandler) {
+                repository.deleteTeacherInfo(it)
+                withContext(Dispatchers.Main) {
+                    showLoading.value = false
+                    showToast.value = app.getString(R.string.msg_teacher_deleted)
+                    goBack()
+                }
             }
         }
-
     }
 
     fun navigateToAddFragment() {
