@@ -69,5 +69,8 @@
     <string name="lbl_duration_hours">Duration(hours)</string>
     <string name="hint_duration_in_hours">Enter duration in hours</string>
     <string name="lbl_subject">Subject</string>
+    <string name="teachers">Teachers</string>
+    <string name="subjects">Subjects</string>
+    <string name="droos">Droos</string>
 
 </resources>

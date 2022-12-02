@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/teacherListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_add_alt_1_24"
+        android:title="@string/teachers" />
+    <item
+        android:id="@+id/subjectListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="@string/subjects" />
+
+    <item
+        android:id="@+id/darsListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="@string/droos" />
+
+</menu>
