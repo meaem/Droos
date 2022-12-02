@@ -1,6 +1,7 @@
 package com.aabdelaal.droos.data.source
 
 import androidx.lifecycle.LiveData
+import com.aabdelaal.droos.data.model.Dars
 import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
 
@@ -19,5 +20,9 @@ interface DroosRepository {
     suspend fun deleteAllSubjects()
     suspend fun deleteSubject(id: Long)
 
-
+    fun getDroos(): Result<LiveData<List<Dars>>>
+    suspend fun saveDars(subject: Dars)
+    suspend fun getDarsById(id: Long): Result<Dars>
+    suspend fun deleteAllDroos()
+    suspend fun deleteDars(id: Long)
 }

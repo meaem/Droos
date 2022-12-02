@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <data>
 
         <variable
             name="viewModel"
-            type="com.aabdelaal.droos.ui.subjectsList.SubjectSharedViewModel" />
+            type="com.aabdelaal.droos.ui.dars.DarsSharedViewModel" />
+
+        <import type="com.aabdelaal.droos.utils.Converter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/subject_list_fragment"
+        android:id="@+id/dars_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.subjectsList.ManageSubjectFragment">
@@ -30,17 +33,42 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/lblSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/lbl_subject"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toTopOf="@+id/subjectNameTV"
+            app:layout_constraintStart_toStartOf="@+id/subjectNameTV" />
+
+        <TextView
+            android:id="@+id/subjectNameTV"
+            android:layout_width="363dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="128dp"
+            android:autofillHints="phone"
+            android:ems="10"
+            android:hint="@string/hint_choose_subject"
+            android:text="@={viewModel.currentDars.subject.name}"
+            app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/lbl_teacher"
+            android:text="@string/lbl_date"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/techerNameTV"
-            app:layout_constraintStart_toStartOf="@id/techerNameTV" />
+            app:layout_constraintBottom_toTopOf="@+id/dateTV"
+            app:layout_constraintStart_toStartOf="@id/dateTV" />
 
         <TextView
-            android:id="@+id/techerNameTV"
+            android:id="@+id/dateTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -49,8 +77,8 @@
             android:layout_marginBottom="24dp"
             android:autofillHints="phone"
             android:ems="10"
-            android:hint="@string/hint_choose_teacher"
-            android:text="@={viewModel.currentSubject.teacher.name}"
+            android:hint="@string/hint_choose_subject"
+            android:text="@={Converter.dateToString( viewModel.currentDars.date)}"
             app:drawableStartCompat="@drawable/ic_baseline_person_add_alt_1_24"
             app:layout_constraintBottom_toTopOf="@+id/btnSave"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/lbl_name"
+            android:text="@string/lbl_duration_hours"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/etName"
             app:layout_constraintStart_toStartOf="@+id/etName" />
@@ -77,10 +105,10 @@
             android:layout_marginBottom="24dp"
             android:autofillHints="name"
             android:ems="10"
-            android:hint="@string/hint_subject_name"
-            android:inputType="text"
-            android:text="@={viewModel.currentSubject.name}"
-            app:layout_constraintBottom_toTopOf="@+id/techerNameTV"
+            android:hint="@string/hint_duration_in_hours"
+            android:inputType="number"
+            android:text="@={Converter.intToString(viewModel.currentDars.duration)}"
+            app:layout_constraintBottom_toTopOf="@+id/dateTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +128,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/techerNameTV" />
+            app:layout_constraintTop_toBottomOf="@+id/dateTV" />
 
         <Button
             android:id="@+id/btnCancel"

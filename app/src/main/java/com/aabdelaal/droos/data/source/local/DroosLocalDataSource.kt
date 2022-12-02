@@ -3,6 +3,7 @@ package com.aabdelaal.droos.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import com.aabdelaal.droos.data.model.Dars
 import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.utils.asEntity
@@ -160,6 +161,7 @@ class DroosLocalDataSource(
         }
     }
 
+
     /**
      * Deletes one the Subject from the db
      */
@@ -167,6 +169,47 @@ class DroosLocalDataSource(
         wrapEspressoIdlingResource {
             withContext(ioDispatcher) {
                 droosDao.deleteAllSubjects()
+            }
+        }
+    }
+
+
+    override fun getDroos(): Result<LiveData<List<Dars>>> {
+        val result = droosDao.getDroosWithSubject()
+
+        return Result.success(result.map {
+            it.map {
+                it.asExternalModel()
+            }
+        })
+    }
+
+    override suspend fun getDarsById(id: Long): Result<Dars> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveDars(dars: Dars): Long {
+        var id: Long = 0
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                id = droosDao.saveDars(dars.asEntity())
+            }
+        }
+        return id
+    }
+
+    override suspend fun deleteAllDarss() {
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                droosDao.deleteAllDroos()
+            }
+        }
+    }
+
+    override suspend fun deleteDars(id: Long) {
+        wrapEspressoIdlingResource {
+            withContext(ioDispatcher) {
+                droosDao.deleteDars(id)
             }
         }
     }

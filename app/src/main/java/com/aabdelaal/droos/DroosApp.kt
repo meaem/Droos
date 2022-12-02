@@ -9,6 +9,7 @@ import com.aabdelaal.droos.data.source.local.LocalDB
 import com.aabdelaal.droos.data.source.local.LocalDataSource
 import com.aabdelaal.droos.data.source.remote.DroosRemoteDataSource
 import com.aabdelaal.droos.data.source.remote.RemoteDataSource
+import com.aabdelaal.droos.ui.dars.DarsSharedViewModel
 import com.aabdelaal.droos.ui.firebaseLogin.AuthenticationViewModel
 import com.aabdelaal.droos.ui.firebaseLogin.FirebaseUserLiveData
 import com.aabdelaal.droos.ui.subjectsList.SubjectSharedViewModel
@@ -39,9 +40,9 @@ class DroosApp : Application() {
                 SubjectSharedViewModel(get(), get())
             }
 
-//            viewModel {
-//                TeacherListViewModel(get())
-//            }
+            viewModel {
+                DarsSharedViewModel(get(), get())
+            }
 
 
             viewModel {

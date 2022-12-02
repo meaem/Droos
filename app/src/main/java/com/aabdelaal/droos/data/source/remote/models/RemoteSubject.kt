@@ -2,6 +2,7 @@ package com.aabdelaal.droos.data.source.remote.models
 
 
 import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.Exclude
 
 data class RemoteSubject(
 
@@ -14,7 +15,12 @@ data class RemoteSubject(
     @DocumentId
     var remoteID: String?,
 
-    val id: Long = 0
+    val id: Long = 0,
+
+
+    val currentTeacherInfoId: String?
 
 ) {
+    @Exclude
+    var currentTeacher: RemoteTeacherInfo? = null
 }

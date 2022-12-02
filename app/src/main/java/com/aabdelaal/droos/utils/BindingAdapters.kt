@@ -2,15 +2,21 @@ package com.aabdelaal.droos.utils
 
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.aabdelaal.droos.ui.base.BaseRecyclerViewAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object BindingAdapters {
 
     private val TAG: String = "BindingAdapters"
+
+    private val dateFormatter = SimpleDateFormat.getDateTimeInstance()// ("dd/MM/yyyy hh:mm")
 
     /**
      * Use binding adapter to set the recycler view data using livedata object
@@ -48,4 +54,32 @@ object BindingAdapters {
             }
         }
     }
+
+    @BindingAdapter("dateValue")
+    @JvmStatic
+    fun setDateString(view: TextView, date: Date) {
+//        if (date == null) {
+//            view.text = ""
+//        } else {
+        view.text = dateFormatter.format(date)
+//        }
+    }
+
+    @InverseBindingAdapter(attribute = "dateValue")
+    @JvmStatic
+    fun getDateString(view: TextView): Date {
+        return dateFormatter.parse(view.text.toString())
+    }
+
+
+    @BindingAdapter("android:intValue")
+    @JvmStatic
+    fun setIntString(view: TextView, int: Int) {
+//        if (int == null) {
+//            view.text = ""
+//        } else {
+        view.text = int.toString()
+//        }
+    }
+
 }

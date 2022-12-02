@@ -2,8 +2,10 @@ package com.aabdelaal.droos.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.aabdelaal.droos.data.source.local.entities.DarsEntity
 import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
+import com.aabdelaal.droos.data.source.local.mapping.DroosAndSubject
 import com.aabdelaal.droos.data.source.local.mapping.TeacherInfoAndSubject
 
 /**
@@ -93,5 +95,47 @@ interface DroosDao {
     @Transaction
     @Query("SELECT * FROM subject where id = :id")
     suspend fun getSubjectById(id: Long): TeacherInfoAndSubject?
+
+    /**
+     * @return all teachers.
+     */
+    @Query("SELECT * FROM Dars")
+    fun getDroos(): LiveData<List<DarsEntity>>
+
+    /**
+     * @return all droos with their current darss(if any).
+     */
+    @Transaction
+    @Query("SELECT * FROM Dars")
+    fun getDroosWithSubject(): LiveData<List<DroosAndSubject>>
+
+    /**
+     * Insert a dars in the database. If the dars already exists, replace it.
+     *
+     * @param dars the dars to be inserted.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveDars(dars: DarsEntity): Long
+
+
+    /**
+     * Delete all teachers.
+     */
+    @Query("DELETE FROM Dars")
+    suspend fun deleteAllDroos()
+
+    /**
+     * Delete teacher by ID.
+     */
+    @Query("DELETE FROM Dars where id=:darsId")
+    suspend fun deleteDars(darsId: Long)
+
+    /**
+     * @param id the id of the Teacher Info
+     * @return the teacherInfo object with the id
+     */
+    @Transaction
+    @Query("SELECT * FROM dars where id = :id")
+    suspend fun getDarsById(id: Long): DroosAndSubject?
 
 }

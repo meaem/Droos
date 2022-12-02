@@ -1,6 +1,7 @@
 package com.aabdelaal.droos.data.source.local
 
 import androidx.lifecycle.LiveData
+import com.aabdelaal.droos.data.model.Dars
 import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
 
@@ -22,4 +23,10 @@ interface LocalDataSource {
     suspend fun deleteAllSubjects()
     suspend fun deleteSubject(id: Long)
 
+
+    fun getDroos(): Result<LiveData<List<Dars>>>
+    suspend fun getDarsById(id: Long): Result<Dars>
+    suspend fun saveDars(subject: Dars): Long
+    suspend fun deleteAllDarss()
+    suspend fun deleteDars(id: Long)
 }

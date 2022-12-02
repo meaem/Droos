@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aabdelaal.droos.data.model.Dars
 import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
+import com.aabdelaal.droos.data.source.local.entities.DarsEntity
 import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
+import com.aabdelaal.droos.data.source.local.mapping.DroosAndSubject
 import com.aabdelaal.droos.data.source.local.mapping.TeacherInfoAndSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
@@ -88,14 +91,33 @@ fun Subject.asEntity(): SubjectEntity {
 }
 
 fun Subject.asRemote(): RemoteSubject {
-    return RemoteSubject(this.name, this.isActive, this.remoteID, this.id)
+    return RemoteSubject(this.name, this.isActive, this.remoteID, this.id, teacher?.remoteID)
 
 }
+
+fun SubjectEntity.asExternalModel(): Subject {
+
+    return Subject(name, currentTeacherInfoEntity?.asExternalModel(), isActive, remoteID, id)
+
+}
+
 
 fun TeacherInfoAndSubject.asExternalModel(): Subject {
     return Subject(
         this.subject.name, this.teacher?.asExternalModel(), this.subject.isActive,
         this.subject.remoteID, this.subject.id
     )
+
+}
+
+
+fun Dars.asEntity(): DarsEntity {
+    return DarsEntity(date, duration, remoteID, id, subject?.id)
+
+}
+
+
+fun DroosAndSubject.asExternalModel(): Dars {
+    return Dars(subject?.asExternalModel(), dars.date, dars.duration, dars.remoteID, dars.id)
 
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/subjectListFragment">
+    app:startDestination="@id/darsListFragment">
 
     <fragment
         android:id="@+id/subjectListFragment"
@@ -63,6 +63,26 @@
         android:name="com.aabdelaal.droos.ui.teacherList.ManageTeacherFragment"
         android:label="fragment_add_teacher"
         tools:layout="@layout/fragment_manage_teacher">
+        <argument
+            android:name="Mode"
+            android:defaultValue="ADD"
+            app:argType="com.aabdelaal.droos.utils.ManageMode" />
+    </fragment>
+    <fragment
+        android:id="@+id/darsListFragment"
+        android:name="com.aabdelaal.droos.ui.dars.DarsListFragment"
+        android:label="DarsListFragment">
+        <action
+            android:id="@+id/to_manageDarsFragment"
+            app:destination="@id/manageDarsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageDarsFragment"
+        android:name="com.aabdelaal.droos.ui.dars.ManageDarsFragment"
+        android:label="ManageDarsFragment">
+        <action
+            android:id="@+id/action_manageDarsFragment_to_subjectListFragment"
+            app:destination="@id/subjectListFragment" />
         <argument
             android:name="Mode"
             android:defaultValue="ADD"

@@ -7,14 +7,22 @@ import java.util.*
 
 @Entity(tableName = "Dars")
 data class DarsEntity(
-    @ColumnInfo(name = "subject")
-    val subject: SubjectEntity,
-    @ColumnInfo(name = "date")
-    val date: Date,
+
+
+    @ColumnInfo(name = "date") // date time
+    val date: Date = Date(),
+
     @ColumnInfo(name = "duration")
-    val duration: Int,
+    val duration: Int = 60, // mintues
+
+    @ColumnInfo(name = "remote_id")
+    var remoteID: String?,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long = 0
+    val id: Long = 0,
 
-)
+    @ColumnInfo(name = "current_subject_id")
+    val subjectId: Long?,
+
+    )

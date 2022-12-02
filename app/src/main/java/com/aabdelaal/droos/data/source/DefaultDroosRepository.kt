@@ -17,6 +17,7 @@ package com.aabdelaal.droos.data.source
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.aabdelaal.droos.data.model.Dars
 import com.aabdelaal.droos.data.model.Subject
 import com.aabdelaal.droos.data.model.TeacherInfo
 import com.aabdelaal.droos.data.source.local.LocalDataSource
@@ -290,15 +291,6 @@ class DefaultDroosRepository(
         wrapEspressoIdlingResource {
 
             return droosLocalDataSource.getSubjects()
-//            if (result.isFailure) return Result.failure(result.exceptionOrNull()!!)
-//            else{
-//                return  Result.success(result.getOrNull()!!.map {
-//                    it.map {
-//                        it.asExternalModel()
-//                    }
-//                })
-//            }
-
         }
     }
 
@@ -352,6 +344,29 @@ class DefaultDroosRepository(
                 droosLocalDataSource.deleteSubject(id)
             }
         }
+    }
+
+    override fun getDroos(): Result<LiveData<List<Dars>>> {
+        wrapEspressoIdlingResource {
+
+            return droosLocalDataSource.getDroos()
+        }
+    }
+
+    override suspend fun saveDars(subject: Dars) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getDarsById(id: Long): Result<Dars> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllDroos() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteDars(id: Long) {
+        TODO("Not yet implemented")
     }
 
 

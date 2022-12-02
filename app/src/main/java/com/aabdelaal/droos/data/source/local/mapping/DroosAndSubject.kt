@@ -2,17 +2,18 @@ package com.aabdelaal.droos.data.source.local.mapping
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.aabdelaal.droos.data.source.local.entities.DarsEntity
 import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
-import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
 
-class TeacherInfoAndSubject(
+class DroosAndSubject(
     @Embedded
-    val subject: SubjectEntity,
+    val dars: DarsEntity,
 
     @Relation(
-        parentColumn = "current_teacher_id",
+        parentColumn = "current_subject_id",
         entityColumn = "id"
     )
-    val teacher: TeacherInfoEntity? = null
+    val subject: SubjectEntity? = null
+
 
 )

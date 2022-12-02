@@ -23,18 +23,21 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
 //    private val db = Firebase.firestore
 
     private val teachersCollectionRef by lazy {
+        val userId = userLD.value?.uid ?: "test"
+
 //        Log.d(TAG, "current user live data :" + userLD.value.toString())
-        userLD.value?.let {
-            Firebase.firestore.collection(TEACHER_COLLECTION).document(it.uid)
-                .collection(USER_TEACHER_COLLECTION)
-        }!!
+//        userLD.value?.let {
+        Firebase.firestore.collection(TEACHER_COLLECTION).document(userId)
+            .collection(USER_TEACHER_COLLECTION)
+//        }!!
     }
     private val subjectsCollectionRef by lazy {
+        val userId = userLD.value?.uid ?: "test"
 //        Log.d(TAG, "current user live data :" + userLD.value.toString())
-        userLD.value?.let {
-            Firebase.firestore.collection(SUBJECT_COLLECTION).document(it.uid)
-                .collection(USER_SUBJECT_COLLECTION)
-        }!!
+//        userLD.value?.let {
+        Firebase.firestore.collection(SUBJECT_COLLECTION).document(userId)
+            .collection(USER_SUBJECT_COLLECTION)
+//        }!!
     }
 
     private val techersLiveData = MutableLiveData<List<RemoteTeacherInfo>>()

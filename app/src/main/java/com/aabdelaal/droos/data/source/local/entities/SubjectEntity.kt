@@ -2,6 +2,7 @@ package com.aabdelaal.droos.data.source.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Subject")
@@ -14,7 +15,6 @@ data class SubjectEntity(
     val isActive: Boolean = true,
 
     @ColumnInfo(name = "remote_id")
-
     var remoteID: String?,
 
 
@@ -28,5 +28,8 @@ data class SubjectEntity(
 
 
     ) {
+
+    @Ignore
+    var currentTeacherInfoEntity: TeacherInfoEntity? = null
 
 }
