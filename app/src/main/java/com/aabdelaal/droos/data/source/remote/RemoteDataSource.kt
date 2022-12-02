@@ -1,6 +1,7 @@
 package com.aabdelaal.droos.data.source.remote
 
 import androidx.lifecycle.LiveData
+import com.aabdelaal.droos.data.source.remote.models.RemoteDars
 import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 
@@ -21,8 +22,14 @@ interface RemoteDataSource {
     suspend fun getSubjects(): Result<LiveData<List<RemoteSubject>>>
     suspend fun addSubject(subject: RemoteSubject): String
     suspend fun updateSubject(subject: RemoteSubject)
-
     suspend fun deleteAllSubjects()
     suspend fun deleteSubject(id: String)
+
+    suspend fun getDroos(): Result<LiveData<List<RemoteDars>>>
+    suspend fun addDars(dars: RemoteDars): String
+    suspend fun updateDars(dars: RemoteDars)
+    suspend fun deleteAllDroos()
+    suspend fun deleteDars(id: String)
+
 
 }

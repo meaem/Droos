@@ -60,7 +60,7 @@ class ManageSubjectFragment : BaseFragment() {
                 .show(childFragmentManager, DeleteConfirmationDialog.TAG)
 
         }
-        val setTeacher = fun(t: TeacherInfo) {
+        val setTeacher = fun(t: TeacherInfo?) {
             _viewModel.currentSubject.value?.copy(teacher = t)
                 ?.let { _viewModel.setCurrentSubject(it) } //.teacher = t
         }
@@ -71,17 +71,20 @@ class ManageSubjectFragment : BaseFragment() {
             if (it && _viewModel.dialogIsReady) {
 //                _viewModel.navigationCommand.value =
 //                NavigationCommand.To(ManageSubjectFragmentDirections.toTeacherListFragment(ManageMode.SELECT))
-                _viewModel.teacherList.value?.toTypedArray()?.let { it1 ->
-                    SelectTeacherDialogFragment(setTeacher, it1).show(
+                _viewModel.teacherList.value?.toTypedArray()?.let { arrayOfTeacherInfos ->
+                    val selectedIndex =
+                        arrayOfTeacherInfos.indexOf(_viewModel.currentSubject.value?.teacher)
+
+                    SelectTeacherDialogFragment(
+                        setTeacher,
+                        arrayOfTeacherInfos,
+                        selectedIndex
+                    ).show(
                         childFragmentManager,
                         SelectTeacherDialogFragment.TAG
                     )
                 }
-
-
             }
-
         }
     }
-
 }

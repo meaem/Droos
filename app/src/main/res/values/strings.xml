@@ -19,9 +19,9 @@
     <string name="email_pass">email/pass</string>
     <string name="how_you_want_to_log_in">How do you want to log in?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="err_cant_add_teacher">can not add this teacher</string>
-    <string name="err_cant_add_subject">can not add this subject</string>
-    <string name="err_cant_add_dars">can not add this dars</string>
+    <string name="err_cant_add_teacher">can not save this teacher</string>
+    <string name="err_cant_add_subject">can not save this subject</string>
+    <string name="err_cant_add_dars">can not save this dars</string>
     <string name="data_is_valid">data is valid</string>
     <string name="err_phone_is_empty">Phone is empty!!</string>
     <string name="err_teacher_is_empty">Please Select a teacher!!</string>

@@ -27,6 +27,6 @@ interface LocalDataSource {
     fun getDroos(): Result<LiveData<List<Dars>>>
     suspend fun getDarsById(id: Long): Result<Dars>
     suspend fun saveDars(subject: Dars): Long
-    suspend fun deleteAllDarss()
+    suspend fun deleteAllDroos()
     suspend fun deleteDars(id: Long)
 }

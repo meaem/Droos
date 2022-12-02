@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etName" />
+            app:layout_constraintTop_toBottomOf="@+id/etDuration" />
 
         <TextView
             android:id="@+id/textView3"
@@ -93,11 +93,11 @@
             android:layout_marginBottom="8dp"
             android:text="@string/lbl_duration_hours"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/etName"
-            app:layout_constraintStart_toStartOf="@+id/etName" />
+            app:layout_constraintBottom_toTopOf="@+id/etDuration"
+            app:layout_constraintStart_toStartOf="@+id/etDuration" />
 
         <EditText
-            android:id="@+id/etName"
+            android:id="@+id/etDuration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"

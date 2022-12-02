@@ -13,7 +13,8 @@ import com.aabdelaal.droos.databinding.FragmentSubjectListBinding
 @SuppressLint("LongLogTag")
 class SelectSubjectDialogFragment(
     val ok_Action: (t: Subject) -> Unit = {},
-    val subjectList: Array<Subject>
+    val subjectList: Array<Subject>,
+    val selectedSubject: Int
 ) :
     DialogFragment() {
     lateinit var databinding: FragmentSubjectListBinding
@@ -21,7 +22,7 @@ class SelectSubjectDialogFragment(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            var selectedItem = -1 // Where we track the selected items
+            var selectedItem = selectedSubject // Where we track the selected items
             val builder = AlertDialog.Builder(it)
             val arr = subjectList.map { it.name }.toTypedArray()
 //            Log.d(TAG, "onCreateDialog: ${arr?.size}")
@@ -39,7 +40,7 @@ class SelectSubjectDialogFragment(
                     // Specify the list array, the items to be selected by default (null for none),
                     // and the listener through which to receive callbacks when items are selected
 
-                    .setSingleChoiceItems(arr, 0) { _, which ->
+                    .setSingleChoiceItems(arr, selectedSubject) { _, which ->
                         selectedItem = which
                     }
                     // Set the action buttons

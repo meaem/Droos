@@ -15,6 +15,7 @@ import com.aabdelaal.droos.data.source.local.entities.SubjectEntity
 import com.aabdelaal.droos.data.source.local.entities.TeacherInfoEntity
 import com.aabdelaal.droos.data.source.local.mapping.DroosAndSubject
 import com.aabdelaal.droos.data.source.local.mapping.TeacherInfoAndSubject
+import com.aabdelaal.droos.data.source.remote.models.RemoteDars
 import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 import com.aabdelaal.droos.ui.base.BaseRecyclerViewAdapter
@@ -120,4 +121,11 @@ fun Dars.asEntity(): DarsEntity {
 fun DroosAndSubject.asExternalModel(): Dars {
     return Dars(subject?.asExternalModel(), dars.date, dars.duration, dars.remoteID, dars.id)
 
+}
+
+
+fun Dars.asRemote(): RemoteDars {
+//    this.let {
+    return RemoteDars(date, duration, remoteID, id, subject?.remoteID)
+//    }
 }

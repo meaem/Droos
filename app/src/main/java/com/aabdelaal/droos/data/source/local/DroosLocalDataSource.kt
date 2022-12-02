@@ -198,7 +198,7 @@ class DroosLocalDataSource(
         return id
     }
 
-    override suspend fun deleteAllDarss() {
+    override suspend fun deleteAllDroos() {
         wrapEspressoIdlingResource {
             withContext(ioDispatcher) {
                 droosDao.deleteAllDroos()

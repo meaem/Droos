@@ -353,8 +353,35 @@ class DefaultDroosRepository(
         }
     }
 
-    override suspend fun saveDars(subject: Dars) {
-        TODO("Not yet implemented")
+    override suspend fun saveDars(dars: Dars) {
+        wrapEspressoIdlingResource {
+            coroutineScope {
+//                try {
+                var remoteId: String?
+                withContext(ioDispatcher) {
+                    Log.d(TAG, "b4 add remotely")
+                    if (dars.remoteID == null) {
+                        remoteId = droosRemoteDataSource.addDars(dars.asRemote())
+                        Log.d(TAG, "after add remotely. remoteId:$remoteId")
+                        dars.remoteID = remoteId
+                        println("after add remotely")
+                    } else {
+                        droosRemoteDataSource.updateDars(dars.asRemote())
+                    }
+                }
+
+                withContext(ioDispatcher) {
+                    Log.d(TAG, "b4 add locally")
+                    droosLocalDataSource.saveDars(dars)
+                    Log.d(TAG, "after add locally")
+                }
+
+//                    launch { }
+//                } catch (ex: Exception) {
+//                    println( ex.message.toString())
+//                }
+            }
+        }
     }
 
     override suspend fun getDarsById(id: Long): Result<Dars> {
@@ -362,11 +389,20 @@ class DefaultDroosRepository(
     }
 
     override suspend fun deleteAllDroos() {
-        TODO("Not yet implemented")
+        wrapEspressoIdlingResource {
+            droosRemoteDataSource.deleteAllDroos()
+            droosLocalDataSource.deleteAllDroos()
+        }
     }
 
     override suspend fun deleteDars(id: Long) {
-        TODO("Not yet implemented")
+        wrapEspressoIdlingResource {
+            val result = droosLocalDataSource.getDarsById(id)
+            if (result.isSuccess) {
+                result.getOrNull()?.remoteID?.let { droosRemoteDataSource.deleteDars(it) }
+                droosLocalDataSource.deleteDars(id)
+            }
+        }
     }
 
 

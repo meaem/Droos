@@ -118,7 +118,8 @@ class TeacherSharedViewModel(val app: Application, val repository: DroosReposito
         } else {
             Log.e(TAG, result.toString())
             println(result.toString())
-            showToast.value = app.getString(R.string.err_cant_add_teacher)
+            showToast.value =
+                result.exceptionOrNull()?.message ?: app.getString(R.string.err_cant_add_teacher)
         }
     }
 

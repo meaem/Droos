@@ -3,6 +3,7 @@ package com.aabdelaal.droos.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.aabdelaal.droos.data.source.remote.models.RemoteDars
 import com.aabdelaal.droos.data.source.remote.models.RemoteSubject
 import com.aabdelaal.droos.data.source.remote.models.RemoteTeacherInfo
 import com.google.firebase.auth.FirebaseUser
@@ -16,8 +17,10 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
         const val TAG = "DroosRemoteRepository"
         const val TEACHER_COLLECTION = "teachers"
         const val SUBJECT_COLLECTION = "subjects"
+        const val DROOS_COLLECTION = "droos"
         const val USER_TEACHER_COLLECTION = "user_teachers"
         const val USER_SUBJECT_COLLECTION = "user_subjects"
+        const val USER_DROOS_COLLECTION = "user_droos"
     }
 
 //    private val db = Firebase.firestore
@@ -39,9 +42,18 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
             .collection(USER_SUBJECT_COLLECTION)
 //        }!!
     }
+    private val droosCollectionRef by lazy {
+        val userId = userLD.value?.uid ?: "test"
+//        Log.d(TAG, "current user live data :" + userLD.value.toString())
+//        userLD.value?.let {
+        Firebase.firestore.collection(DROOS_COLLECTION).document(userId)
+            .collection(USER_DROOS_COLLECTION)
+//        }!!
+    }
 
     private val techersLiveData = MutableLiveData<List<RemoteTeacherInfo>>()
     private val subjectsLiveData = MutableLiveData<List<RemoteSubject>>()
+    private val droosLiveData = MutableLiveData<List<RemoteDars>>()
 
 
 //    private val _teachers = MutableLiveData<MutableList<TeacherInfoDTO>>()
@@ -191,5 +203,59 @@ class DroosRemoteDataSource(private val userLD: LiveData<FirebaseUser?>) : Remot
             .delete()
             .await()
     }
+
+    override suspend fun getDroos(): Result<LiveData<List<RemoteDars>>> {
+        try {
+            val reuslt = droosCollectionRef.get().await()
+            val droos = reuslt.toObjects(RemoteDars::class.java)
+            droosLiveData.value = droos
+            return Result.success(droosLiveData)
+        } catch (ex: Exception) {
+            return Result.failure(ex)
+        }
+    }
+
+    override suspend fun addDars(dars: RemoteDars): String {
+        println("before remote add to  ${droosCollectionRef.path}")
+        Log.d(TAG, "before remote add to  ${droosCollectionRef.path}")
+        val x = droosCollectionRef
+            .add(dars)
+            .await()
+        Log.d(TAG, "after remote add to ${droosCollectionRef.path}")
+        println("after remote add to ${droosCollectionRef.path}")
+        return x.id
+    }
+
+    override suspend fun updateDars(dars: RemoteDars) {
+        println("before remote update to ${droosCollectionRef.path}")
+        Log.d(TAG, "before remote update to ${droosCollectionRef.path}")
+
+        subjectsCollectionRef.document(dars.remoteID!!)
+            .set(dars)
+            .await()
+        Log.d(TAG, "after remote update to${droosCollectionRef.path}")
+        println("after remote update to ${droosCollectionRef.path}")
+    }
+
+    override suspend fun deleteAllDroos() {
+        droosCollectionRef
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+
+                    droosCollectionRef.document(document.id).delete()
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .await()
+    }
+
+    override suspend fun deleteDars(id: String) {
+        droosCollectionRef
+            .document(id)
+            .delete()
+            .await()
+    }
+
 
 }
