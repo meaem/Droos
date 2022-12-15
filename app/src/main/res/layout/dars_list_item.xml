@@ -34,28 +34,37 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
-                android:text="@{item.subject.name}"
 
+                android:text="@{item.subject.name}"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editIV"
                 app:layout_constraintStart_toEndOf="@+id/durationTV"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Arabic" />
 
             <TextView
                 android:id="@+id/durationTV"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="0dp"
-                android:gravity="center_horizontal|center_vertical"
+                android:gravity="bottom|center_horizontal"
                 android:text="@{Converter.intToString(item.duration)}"
                 android:textSize="34sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hr"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/durationTV"
+                app:layout_constraintStart_toEndOf="@+id/durationTV"
+                tools:text="hr" />
 
             <TextView
                 android:id="@+id/currentTeacherTv"
@@ -66,6 +75,7 @@
                 android:textAlignment="viewStart"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/nameTv"
                 app:layout_constraintStart_toStartOf="@+id/nameTv"
                 app:layout_constraintTop_toBottomOf="@+id/nameTv"
                 tools:text="Mr. Ahmed" />
@@ -73,14 +83,14 @@
             <ImageView
                 android:id="@+id/editIV"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="0dp"
                 android:contentDescription="@string/edit_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTv"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_edit" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

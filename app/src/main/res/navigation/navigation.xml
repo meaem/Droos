@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/subjectListFragment"
         android:name="com.aabdelaal.droos.ui.subjectsList.SubjectListFragment"
-        android:label="fragment_subject_list"
+        android:label="Subjects"
         tools:layout="@layout/fragment_subject_list">
         <action
             android:id="@+id/to_ManageSubjectFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.aabdelaal.droos.ui.dachboard.DashboardFragment"
-        android:label="fragment_dashboard"
+        android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashboardFragment_to_subjectHistoryFragment"
@@ -29,12 +29,12 @@
     <fragment
         android:id="@+id/subjectHistoryFragment"
         android:name="com.aabdelaal.droos.ui.subjectsList.SubjectHistoryFragment"
-        android:label="fragment_subject_history"
+        android:label="Subject History"
         tools:layout="@layout/fragment_subject_history" />
     <fragment
         android:id="@+id/addSubjectFragment"
         android:name="com.aabdelaal.droos.ui.subjectsList.ManageSubjectFragment"
-        android:label="fragment_add_subject"
+        android:label="Manage Subject"
         tools:layout="@layout/fragment_manage_subject">
         <argument
             android:name="Mode"
@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/teacherListFragment"
         android:name="com.aabdelaal.droos.ui.teacherList.TeacherListFragment"
-        android:label="fragment_teacher_list"
+        android:label="Teachers"
         tools:layout="@layout/fragment_teacher_list">
         <argument
             android:name="Mode"
@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/addTeacherFragment"
         android:name="com.aabdelaal.droos.ui.teacherList.ManageTeacherFragment"
-        android:label="fragment_add_teacher"
+        android:label="Manage Teachers"
         tools:layout="@layout/fragment_manage_teacher">
         <argument
             android:name="Mode"
@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/darsListFragment"
         android:name="com.aabdelaal.droos.ui.dars.DarsListFragment"
-        android:label="DarsListFragment">
+        android:label="Droos">
         <action
             android:id="@+id/to_manageDarsFragment"
             app:destination="@id/manageDarsFragment" />
@@ -79,7 +79,7 @@
     <fragment
         android:id="@+id/manageDarsFragment"
         android:name="com.aabdelaal.droos.ui.dars.ManageDarsFragment"
-        android:label="ManageDarsFragment">
+        android:label="Manage Dars">
         <action
             android:id="@+id/action_manageDarsFragment_to_subjectListFragment"
             app:destination="@id/subjectListFragment" />
